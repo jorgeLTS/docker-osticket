@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  osticket-app:
+    build:
+      context: .
+    restart: unless-stopped
+    container_name: osticket-app
+    ports:
+      - '80:80'
+    volumes:
+      - ./data_www:/var/www/html
+    depends_on:
+      - mysql
+  mysql:
+    container_name: osticket-db
+    restart: always
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data_db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: osticket
+      MYSQL_USER: osticket
+      MYSQL_PASSWORD: osticket  
